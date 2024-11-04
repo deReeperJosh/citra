@@ -299,6 +299,18 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 )
             )
             add(
+                SliderSetting(
+                    IntSetting.STEPS_PER_HOUR,
+                    R.string.steps_per_hour,
+                    R.string.steps_per_hour_description,
+                    0,
+                    65535,
+                    " steps",
+                    IntSetting.STEPS_PER_HOUR.key,
+                    IntSetting.STEPS_PER_HOUR.defaultValue.toFloat()
+                )
+            )
+            add(
                 RunnableSetting(
                     R.string.console_id,
                     0,
@@ -609,10 +621,15 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 add(InputBindingSetting(button, Settings.axisTitles[i]))
             }
 
-            add(HeaderSetting(R.string.controller_dpad))
-            Settings.dPadKeys.forEachIndexed { i: Int, key: String ->
+            add(HeaderSetting(R.string.controller_dpad_axis,R.string.controller_dpad_axis_description))
+            Settings.dPadAxisKeys.forEachIndexed { i: Int, key: String ->
                 val button = getInputObject(key)
                 add(InputBindingSetting(button, Settings.axisTitles[i]))
+            }
+            add(HeaderSetting(R.string.controller_dpad_button,R.string.controller_dpad_button_description))
+            Settings.dPadButtonKeys.forEachIndexed { i: Int, key: String ->
+                val button = getInputObject(key)
+                add(InputBindingSetting(button, Settings.dPadTitles[i]))
             }
 
             add(HeaderSetting(R.string.controller_triggers))
@@ -626,6 +643,16 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 val button = getInputObject(key)
                 add(InputBindingSetting(button, Settings.hotkeyTitles[i]))
             }
+            add(HeaderSetting(R.string.miscellaneous))
+            add(
+                SwitchSetting(
+                    IntSetting.USE_ARTIC_BASE_CONTROLLER,
+                    R.string.use_artic_base_controller,
+                    R.string.use_artic_base_controller_desc,
+                    IntSetting.USE_ARTIC_BASE_CONTROLLER.key,
+                    IntSetting.USE_ARTIC_BASE_CONTROLLER.defaultValue
+                )
+            )
         }
     }
 
@@ -727,6 +754,18 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     R.array.textureFilterValues,
                     IntSetting.TEXTURE_FILTER.key,
                     IntSetting.TEXTURE_FILTER.defaultValue
+                )
+            )
+            add(
+                SliderSetting(
+                    IntSetting.DELAY_RENDER_THREAD_US,
+                    R.string.delay_render_thread,
+                    R.string.delay_render_thread_description,
+                    0,
+                    16000,
+                    " μs",
+                    IntSetting.DELAY_RENDER_THREAD_US.key,
+                    IntSetting.DELAY_RENDER_THREAD_US.defaultValue.toFloat()
                 )
             )
 
@@ -962,6 +1001,15 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     R.string.renderer_debug_description,
                     IntSetting.DEBUG_RENDERER.key,
                     IntSetting.DEBUG_RENDERER.defaultValue
+                )
+            )
+            add(
+                SwitchSetting(
+                    BooleanSetting.INSTANT_DEBUG_LOG,
+                    R.string.instant_debug_log,
+                    R.string.instant_debug_log_desc,
+                    BooleanSetting.INSTANT_DEBUG_LOG.key,
+                    BooleanSetting.INSTANT_DEBUG_LOG.defaultValue
                 )
             )
         }

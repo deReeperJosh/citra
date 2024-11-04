@@ -108,8 +108,16 @@
     <string name="controller_triggers">Triggers</string>
     <string name="controller_trigger">Trigger</string>
     <string name="controller_dpad">D-Pad</string>
+    <string name="controller_dpad_axis">D-Pad (Axis)</string>
+    <string name="controller_dpad_axis_description">Some controllers will not be able to map their dpad as an axis. In that case, use the D-Pad (buttons) section below instead.</string>
+    <string name="controller_dpad_button">D-Pad (Buttons)</string>
+    <string name="controller_dpad_button_description">Only map these buttons if the D-Pad (Axis) settings above do not work with your controller.</string>
     <string name="controller_axis_vertical">Up/Down Axis</string>
     <string name="controller_axis_horizontal">Left/Right Axis</string>
+    <string name="direction_up">Up</string>
+    <string name="direction_down">Down</string>
+    <string name="direction_left">Left</string>
+    <string name="direction_right">Right</string>
     <string name="input_dialog_title">Bind %1$s %2$s</string>
     <string name="input_dialog_description">Press or move an input.</string>
     <string name="input_binding">Input Binding</string>
@@ -182,6 +190,8 @@
     <string name="birthday_day">Day</string>
     <string name="country">Country</string>
     <string name="play_coins">Play Coins</string>
+    <string name="steps_per_hour">Pedometer Steps per Hour</string>
+    <string name="steps_per_hour_description">Number of steps per hour reported by the pedometer. Range from 0 to 65,535.</string>
     <string name="console_id">Console ID</string>
     <string name="regenerate_console_id">Regenerate Console ID</string>
     <string name="regenerate_console_id_description">This will replace your current virtual 3DS with a new one. Your current virtual 3DS will not be recoverable. This might have unexpected effects in games. This might fail if you use an outdated config savegame. Continue?</string>
@@ -689,5 +699,21 @@
     <string name="artic_base_connect_description">Connect to a real console that is running an Artic Base server</string>
     <string name="artic_base_connect">Connect to Artic Base</string>
     <string name="artic_base_enter_address">Enter Artic Base server address</string>
+    <string name="delay_render_thread">Delay game render thread</string>
+    <string name="delay_render_thread_description">Delay the game render thread when it submits data to the GPU. Helps with performance issues in the (very few) dynamic-fps games.</string>
+
+    <!-- Quickload&Save-->
+    <string name="emulation_quicksave_slot">Quicksave</string>
+    <string name="emulation_quicksave">Quicksave</string>
+    <string name="emulation_quickload">Quickload</string>
+    <string name="emulation_occupied_quicksave_slot">Quicksave - %1$tF %1$tR</string>
+    <string name="quicksave_saving">Saving…</string>
+    <string name="quickload_loading">Loading…</string>
+    <string name="quickload_not_found">No Quicksave available.</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="use_artic_base_controller">Use Artic Controller when connected to Artic Base Server</string>
+    <string name="use_artic_base_controller_desc">Use the controls provided by Artic Base Server when connected to it instead of the configured input device.</string>
+    <string name="instant_debug_log">Flush log output on every message</string>
+    <string name="instant_debug_log_desc">Immediately commits the debug log to file. Use this if citra crashes and the log output is being cut.</string>
 
 </resources>

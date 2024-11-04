@@ -1218,7 +1218,10 @@ bool GMainWindow::LoadROM(const QString& filename) {
         case Core::System::ResultStatus::ErrorArticDisconnected:
             QMessageBox::critical(
                 this, tr("Artic Base Server"),
-                tr("An error has occurred whilst communicating with the Artic Base Server."));
+                tr(fmt::format(
+                       "An error has occurred whilst communicating with the Artic Base Server.\n{}",
+                       system.GetStatusDetails())
+                       .c_str()));
             break;
         default:
             QMessageBox::critical(
@@ -1240,6 +1243,10 @@ bool GMainWindow::LoadROM(const QString& filename) {
 }
 
 void GMainWindow::BootGame(const QString& filename) {
+    if (emu_thread) {
+        ShutdownGame();
+    }
+
     const bool is_artic = filename.startsWith(QString::fromStdString("articbase://"));
 
     if (!is_artic && filename.endsWith(QStringLiteral(".cia"))) {
@@ -2652,10 +2659,12 @@ void GMainWindow::UpdateStatusBar() {
         const bool do_mb = results.artic_transmitted >= (1000.0 * 1000.0);
         const double value = do_mb ? (results.artic_transmitted / (1000.0 * 1000.0))
                                    : (results.artic_transmitted / 1000.0);
-        static const std::array<std::pair<Core::PerfStats::PerfArticEventBits, QString>, 4>
+        static const std::array<std::pair<Core::PerfStats::PerfArticEventBits, QString>, 5>
             perf_events = {
                 std::make_pair(Core::PerfStats::PerfArticEventBits::ARTIC_SHARED_EXT_DATA,
                                tr("(Accessing SharedExtData)")),
+                std::make_pair(Core::PerfStats::PerfArticEventBits::ARTIC_SYSTEM_SAVE_DATA,
+                               tr("(Accessing SystemSaveData)")),
                 std::make_pair(Core::PerfStats::PerfArticEventBits::ARTIC_BOSS_EXT_DATA,
                                tr("(Accessing BossExtData)")),
                 std::make_pair(Core::PerfStats::PerfArticEventBits::ARTIC_EXT_DATA,
@@ -2880,7 +2889,9 @@ void GMainWindow::OnCoreError(Core::System::ResultStatus result, std::string det
         error_severity_icon = QMessageBox::Icon::Warning;
     } else if (result == Core::System::ResultStatus::ErrorArticDisconnected) {
         title = tr("Artic Base Server");
-        message = tr("A communication error has occurred. The game will quit.");
+        message =
+            tr(fmt::format("A communication error has occurred. The game will quit.\n{}", details)
+                   .c_str());
         error_severity_icon = QMessageBox::Icon::Critical;
         can_continue = false;
     } else {
@@ -3094,8 +3105,8 @@ void GMainWindow::LoadTranslation() {
     bool loaded;
 
     if (UISettings::values.language.isEmpty()) {
-        // If the selected language is empty, use system locale
-        loaded = translator.load(QLocale(), {}, {}, QStringLiteral(":/languages/"));
+        // Use the system's default locale
+        loaded = translator.load(QLocale::system(), {}, {}, QStringLiteral(":/languages/"));
     } else {
         // Otherwise load from the specified file
         loaded = translator.load(UISettings::values.language, QStringLiteral(":/languages/"));

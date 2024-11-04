@@ -19,6 +19,7 @@ enum class IntSetting(
     RESOLUTION_FACTOR("resolution_factor", Settings.SECTION_RENDERER, 1),
     STEREOSCOPIC_3D_MODE("render_3d", Settings.SECTION_RENDERER, 0),
     STEREOSCOPIC_3D_DEPTH("factor_3d", Settings.SECTION_RENDERER, 0),
+    STEPS_PER_HOUR("steps_per_hour", Settings.SECTION_SYSTEM, 0),
     CARDBOARD_SCREEN_SIZE("cardboard_screen_size", Settings.SECTION_LAYOUT, 85),
     CARDBOARD_X_SHIFT("cardboard_x_shift", Settings.SECTION_LAYOUT, 0),
     CARDBOARD_Y_SHIFT("cardboard_y_shift", Settings.SECTION_LAYOUT, 0),
@@ -40,7 +41,9 @@ enum class IntSetting(
     VSYNC("use_vsync_new", Settings.SECTION_RENDERER, 1),
     DEBUG_RENDERER("renderer_debug", Settings.SECTION_DEBUG, 0),
     TEXTURE_FILTER("texture_filter", Settings.SECTION_RENDERER, 0),
-    USE_FRAME_LIMIT("use_frame_limit", Settings.SECTION_RENDERER, 1);
+    USE_FRAME_LIMIT("use_frame_limit", Settings.SECTION_RENDERER, 1),
+    DELAY_RENDER_THREAD_US("delay_game_render_thread_us", Settings.SECTION_RENDERER, 0),
+    USE_ARTIC_BASE_CONTROLLER("use_artic_base_controller", Settings.SECTION_CONTROLS, 0);
 
     override var int: Int = defaultValue
 
@@ -68,7 +71,8 @@ enum class IntSetting(
             DEBUG_RENDERER,
             CPU_JIT,
             ASYNC_CUSTOM_LOADING,
-            AUDIO_INPUT_TYPE
+            AUDIO_INPUT_TYPE,
+            USE_ARTIC_BASE_CONTROLLER
         )
 
         fun from(key: String): IntSetting? = IntSetting.values().firstOrNull { it.key == key }
